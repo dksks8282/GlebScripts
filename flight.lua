@@ -18,10 +18,10 @@ UICorner.Parent = MainFrame
 
 Title.Parent = MainFrame
 Title.Size = UDim2.new(1, 0, 0, 45)
-Title.Text = "GLEB MEGA HUB"
+Title.Text = "GLEB JOYSTICK FLY"
 Title.TextColor3 = Color3.fromRGB(0, 255, 255)
 Title.BackgroundTransparency = 1
-Title.TextSize = 20
+Title.TextSize = 18
 
 FlyBtn.Parent = MainFrame
 FlyBtn.Size = UDim2.new(0.85, 0, 0, 45)
@@ -60,7 +60,7 @@ FlyBtn.MouseButton1Click:Connect(function()
         FlyBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 0)
         
         local bv = Instance.new("BodyVelocity", hrp)
-        bv.Name = "GlebVelocity"
+        bv.Name = "GlebFly"
         bv.MaxForce = Vector3.new(9e9, 9e9, 9e9)
         
         local bg = Instance.new("BodyGyro", hrp)
@@ -69,23 +69,21 @@ FlyBtn.MouseButton1Click:Connect(function()
         
         task.spawn(function()
             while flying do
-                local cam = workspace.CurrentCamera
-                -- Рассчитываем направление на основе джойстика и камеры
-                local moveDir = cam.CFrame:VectorToWorldSpace(hum.MoveDirection)
-                
-                if hum.MoveDirection.Magnitude > 0 then
+                -- Глеб, теперь летим СТРОГО по направлению джойстика
+                local moveDir = hum.MoveDirection
+                if moveDir.Magnitude > 0 then
                     bv.Velocity = moveDir * speed
                     bg.CFrame = CFrame.new(hrp.Position, hrp.Position + moveDir)
                 else
                     bv.Velocity = Vector3.new(0, 0, 0)
-                    bg.CFrame = cam.CFrame
                 end
                 
                 hum:ChangeState(Enum.HumanoidStateType.Freefall)
                 task.wait()
             end
-            if hrp:FindFirstChild("GlebVelocity") then hrp.GlebVelocity:Destroy() end
+            if hrp:FindFirstChild("GlebFly") then hrp.GlebFly:Destroy() end
             if hrp:FindFirstChild("GlebGyro") then hrp.GlebGyro:Destroy() end
+            hum:ChangeState(Enum.HumanoidStateType.Landing)
         end)
     else
         FlyBtn.Text = "FLY: OFF"
