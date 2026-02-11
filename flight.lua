@@ -1,39 +1,56 @@
-local p = game.Players.LocalPlayer
-local c = p.Character or p.CharacterAdded:Wait()
-local hrp = c:WaitForChild("HumanoidRootPart")
-local t = game.Workspace.Terrain
+local ScreenGui = Instance.new("ScreenGui")
+local TextButton = Instance.new("TextButton")
+local UICorner = Instance.new("UICorner")
 
-t.WaterTransparency = 1 
-t.WaterWaveSize = 0
-t.WaterWaveSpeed = 0
+-- Настройки кнопки
+ScreenGui.Parent = game.CoreGui
+TextButton.Parent = ScreenGui
+TextButton.Size = UDim2.new(0, 180, 0, 60)
+TextButton.Position = UDim2.new(0.5, -90, 0.05, 0)
+TextButton.Text = "FLY: OFF"
+TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+TextButton.Font = Enum.Font.SourceSansBold
+TextButton.TextSize = 30
 
-local active = false
+UICorner.Parent = TextButton
 
-local gui = Instance.new("ScreenGui", p.PlayerGui)
-local btn = Instance.new("TextButton", gui)
-btn.Size = UDim2.new(0, 120, 0, 40)
-btn.Position = UDim2.new(0, 10, 0, 200)
-btn.Text = "Water: OFF"
-btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-btn.TextColor3 = Color3.new(1, 1, 1)
+local flying = false
+local speed = 60
 
-btn.MouseButton1Click:Connect(function()
-    active = not active
-    if active then
-        btn.Text = "Water: ON"
-        btn.BackgroundColor3 = Color3.fromRGB(0, 120, 200)
+TextButton.MouseButton1Click:Connect(function()
+    flying = not flying
+    local char = game.Players.LocalPlayer.Character
+    if not char or not char:FindFirstChild("HumanoidRootPart") then return end
+
+    if flying then
+        TextButton.Text = "FLY: ON"
+        TextButton.BackgroundColor3 = Color3.fromRGB(0, 180, 0)
+        
+        local bg = Instance.new("BodyGyro", char.HumanoidRootPart)
+        bg.P = 9e4
+        bg.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+        bg.cframe = char.HumanoidRootPart.CFrame
+        bg.Name = "FlightGyro"
+        
+        local bv = Instance.new("BodyVelocity", char.HumanoidRootPart)
+        bv.velocity = Vector3.new(0, 0.1, 0)
+        bv.maxForce = Vector3.new(9e9, 9e9, 9e9)
+        bv.Name = "FlightVelocity"
+        
         task.spawn(function()
-            while active do
-                local pos = hrp.Position
-                local reg = Region3.new(pos - Vector3.new(7, 7, 7), pos + Vector3.new(7, 7, 7))
-                reg = reg:ExpandToGrid(4)
-                t:SetCells(reg, Enum.Material.Water, Enum.WaterOccupation.Full, Enum.WaterForce.None)
-                task.wait(0.03)
+            while flying do
+                task.wait()
+                char.Humanoid.PlatformStand = true
+                bv.velocity = workspace.CurrentCamera.CFrame.LookVector * speed
+                bg.cframe = workspace.CurrentCamera.CFrame
             end
+            char.Humanoid.PlatformStand = false
+            if char.HumanoidRootPart:FindFirstChild("FlightGyro") then char.HumanoidRootPart.FlightGyro:Destroy() end
+            if char.HumanoidRootPart:FindFirstChild("FlightVelocity") then char.HumanoidRootPart.FlightVelocity:Destroy() end
         end)
     else
-        btn.Text = "Water: OFF"
-        btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-        t:Clear()
+        TextButton.Text = "FLY: OFF"
+        TextButton.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
     end
 end)
