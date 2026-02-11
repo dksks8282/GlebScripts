@@ -8,10 +8,9 @@ local UpBtn = Instance.new("TextButton")
 local DownBtn = Instance.new("TextButton")
 local UICorner = Instance.new("UICorner")
 
--- Настройка меню
 ScreenGui.Parent = game.CoreGui
 MainFrame.Parent = ScreenGui
-MainFrame.Size = UDim2.new(0, 220, 0, 300) -- Увеличил высоту для новых кнопок
+MainFrame.Size = UDim2.new(0, 220, 0, 300)
 MainFrame.Position = UDim2.new(0.5, -110, 0.2, 0)
 MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 MainFrame.Active = true
@@ -33,21 +32,21 @@ FlyBtn.Text = "FLY: OFF"
 FlyBtn.BackgroundColor3 = Color3.fromRGB(150, 0, 0)
 FlyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 
--- Кнопка ВВЕРХ
 UpBtn.Parent = MainFrame
 UpBtn.Size = UDim2.new(0.4, 0, 0, 35)
 UpBtn.Position = UDim2.new(0.075, 0, 0.3, 0)
 UpBtn.Text = "UP ↑"
 UpBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 UpBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+UpBtn.Visible = false 
 
--- Кнопка ВНИЗ
 DownBtn.Parent = MainFrame
 DownBtn.Size = UDim2.new(0.4, 0, 0, 35)
 DownBtn.Position = UDim2.new(0.525, 0, 0.3, 0)
 DownBtn.Text = "DOWN ↓"
 DownBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 DownBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+DownBtn.Visible = false
 
 SpeedInput.Parent = MainFrame
 SpeedInput.Size = UDim2.new(0.85, 0, 0, 35)
@@ -67,7 +66,6 @@ local speed = 50
 local upValue = 0
 local player = game.Players.LocalPlayer
 
--- Логика кнопок высоты
 UpBtn.MouseButton1Down:Connect(function() upValue = 1 end)
 UpBtn.MouseButton1Up:Connect(function() upValue = 0 end)
 DownBtn.MouseButton1Down:Connect(function() upValue = -1 end)
@@ -84,6 +82,9 @@ FlyBtn.MouseButton1Click:Connect(function()
     if flying then
         FlyBtn.Text = "FLY: ON"
         FlyBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 0)
+        UpBtn.Visible = true
+        DownBtn.Visible = true
+        
         local bv = Instance.new("BodyVelocity", hrp)
         bv.Name = "GlebFly"
         bv.MaxForce = Vector3.new(9e9, 9e9, 9e9)
@@ -94,7 +95,6 @@ FlyBtn.MouseButton1Click:Connect(function()
         task.spawn(function()
             while flying do
                 local moveDir = hum.MoveDirection
-                -- Основная скорость от джойстика + вертикальная скорость от кнопок
                 local verticalVelocity = Vector3.new(0, upValue * speed, 0)
                 
                 if moveDir.Magnitude > 0 or upValue ~= 0 then
@@ -114,6 +114,8 @@ FlyBtn.MouseButton1Click:Connect(function()
     else
         FlyBtn.Text = "FLY: OFF"
         FlyBtn.BackgroundColor3 = Color3.fromRGB(150, 0, 0)
+        UpBtn.Visible = false
+        DownBtn.Visible = false
     end
 end)
 
