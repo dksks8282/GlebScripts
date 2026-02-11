@@ -1,21 +1,17 @@
--- ==========================================
--- ИСПРАВЛЕННЫЙ КОД ГЛЕБА (ТОЛЬКО ПРЯМАЯ ССЫЛКА)
--- ==========================================
-
+-- СКРИПТ ГЛЕБА (ВАРИАНТ ЧЕРЕЗ WORKSPACE)
 local sound = Instance.new("Sound")
-sound.Name = "Gleb_Mega_Music"
 sound.Parent = game:GetService("SoundService")
 
--- Глеб, вот эта ссылка ПРАВИЛЬНАЯ (без слова blob):
-sound.SoundId = "https://raw.githubusercontent.com/dksks8282/GlebScripts/main/Midu_Echoing.mp3"
+-- Эта команда берет файл прямо из папки твоего чита!
+local success, asset = pcall(function()
+    return getcustomasset("Midu_Echoing.mp3")
+end)
 
-sound.Volume = 10 
-sound.Looped = true 
-sound.RollOffMode = Enum.RollOffMode.Linear
-sound.ReferenceDistance = 100000
-sound.MaxDistance = 100000
-
--- Пытаемся запустить
-sound:Play()
-
-print("Скрипт Глеба запущен! Если звук не пошел сразу - подожди 5 секунд загрузки.")
+if success then
+    sound.SoundId = asset
+    sound.Volume = 10
+    sound:Play()
+    print("Глеб, музыка успешно найдена в папке workspace!")
+else
+    print("Ошибка: Глеб, проверь, лежит ли файл в папке workspace!")
+end
