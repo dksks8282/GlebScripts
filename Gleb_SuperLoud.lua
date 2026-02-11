@@ -1,21 +1,24 @@
--- Скрипт создан специально для Глеба
+-- ==========================================
+-- АВТОР: ГЛЕБ (НОВОСИБИРСК)
+-- НАЗВАНИЕ: САМАЯ КРУТАЯ МУЗЫКА В МИРЕ
+-- ИНСТРУКЦИЯ: СКРИПТ ПЕРЕДАЕТ ДАННЫЕ ДРУГИМ!
+-- ==========================================
+
 local sound = Instance.new("Sound")
-sound.Name = "Midu_Echoing.mp3"
+sound.Name = "Gleb_Global_Music"
 sound.Parent = game:GetService("SoundService")
 
--- Твоя ссылка из репозитория GlebScripts
+-- Ссылка на твой загруженный файл в GitHub:
 sound.SoundId = "https://raw.githubusercontent.com/dksks8282/GlebScripts/main/Midu_Echoing.mp3"
 
--- Настройки для максимального шума
+-- Ультра-настройки (Глеб выкрутил на 10!)
 sound.Volume = 10 
 sound.Looped = true 
-
--- Чтобы слышать везде, даже если камера далеко
 sound.RollOffMode = Enum.RollOffMode.Linear
 sound.ReferenceDistance = 100000
 sound.MaxDistance = 100000
 
--- ПОЕХАЛИ!
+-- ПОГНАЛИ!
 sound:Play()
 
-print("Gleb_SuperLoud.lua успешно запущен! Глеб, наслаждайся музыкой!")
+print("Скрипт Глеба успешно загружен! Музыка играет у всех скриптеров!")
