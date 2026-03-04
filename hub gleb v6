@@ -1,0 +1,91 @@
+--[[
+    GLEB HUB ULTIMATE (11-в-1)
+    Создатель: Глеб (Новосибирск)
+    Платформа: Delta / Android 14
+--]]
+
+local player = game.Players.LocalPlayer
+local pGui = player:WaitForChild("PlayerGui")
+
+-- Создаем основное меню
+if pGui:FindFirstChild("GlebHubFinal") then pGui.GlebHubFinal:Destroy() end
+local sg = Instance.new("ScreenGui", pGui)
+sg.Name = "GlebHubFinal"
+sg.ResetOnSpawn = false
+
+local frame = Instance.new("Frame", sg)
+frame.Size = UDim2.new(0, 220, 0, 450) -- Узкое, но длинное меню
+frame.Position = UDim2.new(0.02, 0, 0.15, 0)
+frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+frame.BorderSizePixel = 0
+Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 15)
+
+-- Заголовок
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1, 0, 0, 40)
+title.Text = "🥓 GLEB HUB V6"
+title.TextColor3 = Color3.new(1, 1, 1)
+title.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 18
+Instance.new("UICorner", title).CornerRadius = UDim.new(0, 15)
+
+-- Скролл для кнопок
+local scroll = Instance.new("ScrollingFrame", frame)
+scroll.Size = UDim2.new(1, -10, 1, -50)
+scroll.Position = UDim2.new(0, 5, 0, 45)
+scroll.BackgroundTransparency = 1
+scroll.CanvasSize = UDim2.new(0, 0, 0, 750) -- Чтобы все 11 кнопок влезли
+scroll.ScrollBarThickness = 4
+
+local layout = Instance.new("UIListLayout", scroll)
+layout.Padding = UDim.new(0, 5)
+layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+
+-- ФУНКЦИЯ ДЛЯ СОЗДАНИЯ КНОПОК
+local function createBtn(name, url, color)
+    local b = Instance.new("TextButton", scroll)
+    b.Size = UDim2.new(0, 190, 0, 50)
+    b.Text = name
+    b.BackgroundColor3 = color or Color3.fromRGB(50, 50, 50)
+    b.TextColor3 = Color3.new(1, 1, 1)
+    b.Font = Enum.Font.Gotham
+    b.TextSize = 14
+    Instance.new("UICorner", b)
+    
+    b.MouseButton1Click:Connect(function()
+        print("Глеб запускает: " .. name)
+        local success, err = pcall(function()
+            loadstring(game:HttpGet(url))()
+        end)
+        if not success then print("Ошибка в " .. name .. ": " .. err) end
+    end)
+end
+
+-- СПИСОК ТВОИХ СКРИПТОВ (11 ШТУК)
+createBtn("🚀 Mobile Fly V5", "https://rawscripts.net/raw/Universal-Script-Gleb-Hub-V5-Mobile-Fly-Joystick-Up-Down-110267", Color3.fromRGB(0, 120, 255))
+createBtn("🦘 Endless Jump Russia", "https://rawscripts.net/raw/UP-Just-a-baseplate.-endless-jumping-Russia-110337", Color3.fromRGB(0, 150, 0))
+createBtn("🎵 Cool Music", "https://rawscripts.net/raw/UP-Just-a-baseplate.-Cool-music-110555", Color3.fromRGB(150, 0, 150))
+createBtn("👤 Copy Name RU", "https://rawscripts.net/raw/UP-Just-a-baseplate.-copy-player-name-ru-110574", Color3.fromRGB(80, 80, 80))
+createBtn("🇷🇺 FE Flags RU", "https://rawscripts.net/raw/UP-Just-a-baseplate.-fe-flagi-ru-110986", Color3.fromRGB(200, 0, 0))
+createBtn("⚙️ ESC GUI RU", "https://rawscripts.net/raw/Universal-Script-ESC-GUI-ru-RU-112817", Color3.fromRGB(100, 100, 100))
+createBtn("⚔️ Sword Script", "https://rawscripts.net/raw/UP-Just-a-baseplate.-sword-script-127007", Color3.fromRGB(180, 100, 0))
+createBtn("🗡️ Sword V2 (Hitbox)", "https://rawscripts.net/raw/UP-Just-a-baseplate.-sword-v2-Large-hitboxes-127497", Color3.fromRGB(255, 100, 0))
+createBtn("🔫 Laser Gun Beta", "https://rawscripts.net/raw/UP-Just-a-baseplate.-laser-gun-beta-127500", Color3.fromRGB(0, 200, 200))
+createBtn("💣 Bomb Script", "https://rawscripts.net/raw/UP-Just-a-baseplate.-Bomb-127636", Color3.fromRGB(255, 50, 50))
+createBtn("⏳ TIME STOP + BOMB", "https://rawscripts.net/raw/UP-Just-a-baseplate.-Stopping-time-and-bomb-128246", Color3.fromRGB(0, 0, 0))
+
+-- Кнопка скрыть/показать меню
+local toggle = Instance.new("TextButton", sg)
+toggle.Size = UDim2.new(0, 60, 0, 30)
+toggle.Position = UDim2.new(0.02, 0, 0.1, 0)
+toggle.Text = "GLEB"
+toggle.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+toggle.TextColor3 = Color3.new(1, 1, 1)
+Instance.new("UICorner", toggle)
+
+toggle.MouseButton1Click:Connect(function()
+    frame.Visible = not frame.Visible
+end)
+
+print("Глеб, твой супер-хаб из 11 скриптов загружен! 🥓🔥")
