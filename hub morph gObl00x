@@ -1,0 +1,62 @@
+-- // GLEB HUB V6 [EMERGENCY FIX] //
+local player = game.Players.LocalPlayer
+local pgui = player:WaitForChild("PlayerGui")
+
+-- Удаляем всё старое под корень
+if pgui:FindFirstChild("GlebInception") then pgui.GlebInception:Destroy() end
+
+local sg = Instance.new("ScreenGui", pgui)
+sg.Name = "GlebInception"
+sg.ResetOnSpawn = false
+
+-- 1. ГЛАВНОЕ МЕНЮ (ПРОСТОЕ)
+local Main = Instance.new("Frame", sg)
+Main.Size = UDim2.new(0, 200, 0, 250)
+Main.Position = UDim2.new(0.5, -100, 0.5, -125)
+Main.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Main.Visible = false -- СНАЧАЛА СКРЫТО!
+Main.Active = true
+
+-- 2. КНОПКА gObl00x (ПЕРЕКЛЮЧАТЕЛЬ)
+local Toggle = Instance.new("TextButton", sg)
+Toggle.Size = UDim2.new(0, 80, 0, 40)
+Toggle.Position = UDim2.new(0, 10, 0.1, 0)
+Toggle.Text = "gObl00x"
+Toggle.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+Toggle.TextColor3 = Color3.new(1, 1, 1)
+
+-- САМАЯ ВАЖНАЯ ЧАСТЬ: ФУНКЦИЯ ОТКРЫТИЯ
+Toggle.MouseButton1Down:Connect(function()
+    Main.Visible = not Main.Visible
+    print("Глеб, меню переключено!")
+end)
+
+-- 3. ФУНКЦИЯ ЗАПУСКА
+local function run(url)
+    -- Сначала клавиатура Delta
+    loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-delta-keyboard-crack-reupload-20074"))()
+    task.wait(1.5)
+    -- Потом скрипт
+    loadstring(game:HttpGet(url))()
+end
+
+-- 4. КНОПКИ (БЕЗ СКРУГЛЕНИЙ, ЧТОБЫ НЕ БАГАЛО)
+local b1 = Instance.new("TextButton", Main)
+b1.Size = UDim2.new(1, 0, 0, 50)
+b1.Position = UDim2.new(0, 0, 0, 20)
+b1.Text = "THE ANGEL 😇"
+b1.MouseButton1Down:Connect(function() run("https://rawscripts.net/raw/Universal-Script-The-Angel-use-an-reanimation-42989") end)
+
+local b2 = Instance.new("TextButton", Main)
+b2.Size = UDim2.new(1, 0, 0, 50)
+b2.Position = UDim2.new(0, 0, 0, 80)
+b2.Text = "GUEST 666 😈"
+b2.MouseButton1Down:Connect(function() run("https://rawscripts.net/raw/Universal-Script-Fe-Guest-666-Only-anims-are-fe-53309") end)
+
+local b3 = Instance.new("TextButton", Main)
+b3.Size = UDim2.new(1, 0, 0, 50)
+b3.Position = UDim2.new(0, 0, 0, 140)
+b3.Text = "SERVER ADMIN 🛡️"
+b3.MouseButton1Down:Connect(function() run("https://rawscripts.net/raw/Universal-Script-Server-Admin-Use-CurrentAngle-or-Oxide-42652") end)
+
+print("Глеб, если это не сработает, значит Delta лагает. Проверяй!")
